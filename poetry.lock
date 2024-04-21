@@ -211,6 +211,16 @@ files = [
 ]
 
 [[package]]
+name = "mysql-connector"
+version = "2.2.9"
+description = "MySQL driver written in Python"
+optional = false
+python-versions = "*"
+files = [
+    {file = "mysql-connector-2.2.9.tar.gz", hash = "sha256:1733e6ce52a049243de3264f1fbc22a852cb35458c4ad739ba88189285efdf32"},
+]
+
+[[package]]
 name = "packaging"
 version = "24.0"
 description = "Core utilities for Python packages"
@@ -281,4 +291,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "073fb37146ff3bba24379c4b548f45101100baeb8161314fc362ba528294fdc4"
+content-hash = "a1a94a32df46a2d97efb7a42108de833cd0cd515b6dea1b0a17bf6bfc4636c3a"
