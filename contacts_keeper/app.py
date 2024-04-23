@@ -55,5 +55,17 @@ def add_contact():
         return redirect(url_for('get_contacts'))
 
 
+@app.route('/delete/<string:id>', methods=['GET'])
+def delete_contact(id):
+
+    with UseDatabase(app.config['dbconfig']) as cursor:
+
+        query = f'''DELETE FROM {os.getenv('DATABASE')} WHERE id=%s'''
+        cursor.execute(query, (id,))
+        flash('Contact has been deleted successfully', category='success')
+
+    return redirect(url_for('get_contacts'))
+
+
 if __name__ == '__main__':
     app.run(debug=True)
