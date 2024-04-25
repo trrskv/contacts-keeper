@@ -45,7 +45,7 @@ def add_contact():
 
                 query = f'''INSERT INTO {os.getenv('DATABASE')} (name, email, phone) VALUES (%s, %s, %s)'''
                 cursor.execute(query, (name, email, phone))
-                flash('Contact successfully added', category='success')
+                flash('Contact added successfully', category='success')
         else:
             flash(
                 'Contact not added. Fill in the "Name" field, please!',
@@ -55,16 +55,44 @@ def add_contact():
         return redirect(url_for('get_contacts'))
 
 
-@app.route('/delete/<string:id>', methods=['GET'])
-def delete_contact(id):
+@app.route('/delete/<string:id_>', methods=['GET'])
+def delete_contact(id_):
 
     with UseDatabase(app.config['dbconfig']) as cursor:
 
         query = f'''DELETE FROM {os.getenv('DATABASE')} WHERE id=%s'''
-        cursor.execute(query, (id,))
+        cursor.execute(query, (id_,))
         flash('Contact has been deleted successfully', category='success')
 
     return redirect(url_for('get_contacts'))
+
+
+@app.route('/update_contact', methods=['POST', 'GET'])
+def update_contact():
+    if request.method == 'POST':
+        id = request.form['id']
+        name = request.form['name']
+        email = request.form['email']
+        phone = request.form['phone']
+
+        with UseDatabase(app.config['dbconfig']) as cursor:
+
+            query = f'''
+        UPDATE {os.getenv('DATABASE')} SET name=%s, email=%s, phone=%s
+        WHERE id=%s
+        '''
+            cursor.execute(
+                query,
+                (
+                    name,
+                    email,
+                    phone,
+                    id,
+                ),
+            )
+        flash('Contact updated successfully', category='success')
+
+        return redirect(url_for('get_contacts'))
 
 
 if __name__ == '__main__':
